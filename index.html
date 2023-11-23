@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<link rel="stylesheet" href="style.css" />
 	<meta charset="UTF-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Todo List - SMIT</title>
 	<!-- CSS Import -->
-	<link rel="stylesheet" href="style.css" />
 	<!-- End of CSS Import -->
 	<!-- Fonts -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,7 +20,11 @@
 		<!-- Greeting -->
 		<section class="greeting">
 			<h2 class="title">
-				What's up, <input type="text" id="name" placeholder="Name here ..." />
+				What's up, <input 
+				type="text" 
+				id="name"
+				placeholder="Name Please!"
+				autocomplete="off" />
 			</h2>
 		</section>
 		<!-- End of Greeting -->
@@ -34,14 +38,15 @@
 					type="text" 
 					placeholder="e.g. Get some milk"
 					name="content"
-					id="content" />
+					id="content"
+					autocomplete="off" />
 				
 				<h4>Pick a category</h4>
 				<div class="options">
 					<label>
 						<input type="radio" name="category" id="category1" value="business" /> 
 						<span class="bubble business"></span>
-						<div>Business</div>
+						<div>Educational</div>
 					</label>
 					<label>
 						<input type="radio" name="category" id="category2" value="personal" />
@@ -50,7 +55,7 @@
 					</label>
 				</div>
 
-				<input id="add-todo" type="submit" value="Add todo" />
+				<input id="add-todo" type="submit" value="Add todo" onclick="someValidation()" />
 			</form>
 		</section>
 		<!-- End of New Todo -->

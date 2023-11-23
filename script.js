@@ -108,6 +108,7 @@ function DisplayTodos () {
 		})
 
 		deleteButton.addEventListener('click', (e) => {
+			alert("Are u sure to delete it ...")
 			todos = todos.filter(t => t != todo);
 			localStorage.setItem('todos', JSON.stringify(todos));
 			DisplayTodos()
@@ -115,3 +116,18 @@ function DisplayTodos () {
 
 	})
 }
+let name = document.getElementById('name')
+let input = document.getElementById('content');
+let label = document.getElementById('category1');
+console.log(label.checked)
+ document.getElementById('add-todo').addEventListener("click", function someValidation(e){
+	e.preventDefault()
+	if(name.value === ""){
+		alert("please Enter Your Name at the Top")
+	}
+else if(input.value === ""){
+		alert('please put some todo')
+	} else if(label.checked === false){
+		alert("Selsect Any Category")
+	}
+ })
