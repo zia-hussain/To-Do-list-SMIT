@@ -32,7 +32,7 @@ input:not([type="radio"]):not([type="checkbox"]), button {
 /* End of Resets */
 
 body {
-	background: linear-gradient(to bottom left ,#fff8, rgb(34, 63, 72)),#fff;
+	background: linear-gradient(to bottom left ,#fff8, #3F6D7A,#fff);
 	min-height: 100vh;
 	color: var(--dark);
     display: flex;
@@ -111,7 +111,7 @@ h4 {
 }
 #name::placeholder{
 	font-family: sans-serif;
-    color: #828282;
+    color: #3F6D7A;
     font-weight: 600;
 }
 .create-todo{
@@ -250,7 +250,7 @@ input:checked ~ .bubble::after {
 	align-items: center;
 	background-color: #333;
 	width: 20px;
-	height: 20px;
+	height: 19px;
 	border: 2px solid #fff;
 	opacity: 1;
 }
@@ -260,7 +260,7 @@ input:checked ~ .bubble.personal::after {
 	align-items: center;
 	background-color: #313154;
 	width: 20px;
-	height: 20px;
+	height: 19px;
 	border: 2px solid #fff;
 	opacity: 1;
 }
@@ -277,8 +277,8 @@ input:checked ~ .bubble.personal::after {
 	font-family: sans-serif;
 }
 .create-todo #new-todo-form h4{
-    color: #666f77;
-    font-size: 20px;
+    color: #3F6D7A;
+    font-size: 22px;
 	font-weight: 900;
 	/* font-family: "monserrat"; */
     padding-top: 5px;
@@ -329,6 +329,9 @@ input:checked ~ .bubble.personal::after {
 	6px 3px 15px #0004 inset,
 	0 0 8px #0005;
 }
+.todo-list{
+	margin: 0;
+}
 
 .todo-list .list {
 	margin: 1rem 0;
@@ -366,7 +369,7 @@ input:checked ~ .bubble.personal::after {
 
 .todo-item .todo-content input {
 	color: var(--dark);
-	font-size: 1.125rem;
+	font-size: 22px;
 	text-transform: capitalize;
 }
 
@@ -456,9 +459,15 @@ input:checked ~ .bubble.personal::after {
 
 .todo-item.done .todo-content input {
 	text-decoration: line-through;
-	color: var(--grey);
+	color: #fff8;
+	font-size: 22px;
+
 }
 
 #add-todo{
     border-radius: 50px;
+}
+@media only screen and (max-width:767px){
+	
+	
 }

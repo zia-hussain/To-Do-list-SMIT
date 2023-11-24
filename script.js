@@ -1,133 +1,147 @@
-window.addEventListener('load', () => {
-	todos = JSON.parse(localStorage.getItem('todos')) || [];
-	const nameInput = document.querySelector('#name');
-	const newTodoForm = document.querySelector('#new-todo-form');
+// Event listener for when the window has fully loaded
+window.addEventListener("load", () => {
+  // Load todos from localStorage or initialize an empty array
+  todos = JSON.parse(localStorage.getItem("todos")) || [];
 
-	const username = localStorage.getItem('username') || '';
+  // Get references to DOM elements
+  const nameInput = document.querySelector("#name");
+  const newTodoForm = document.querySelector("#new-todo-form");
 
-	nameInput.value = username;
+  // Get username from localStorage or initialize an empty string
+  const username = localStorage.getItem("username") || "";
 
-	nameInput.addEventListener('change', (e) => {
-		localStorage.setItem('username', e.target.value);
-	})
+  // Set the value of the name input to the stored username
+  nameInput.value = username;
 
-	newTodoForm.addEventListener('submit', e => {
-		e.preventDefault();
+  // Event listener for changes in the name input
+  nameInput.addEventListener("change", (e) => {
+    // Store the updated username in localStorage
+    localStorage.setItem("username", e.target.value);
+  });
 
-		const todo = {
-			content: e.target.elements.content.value,
-			category: e.target.elements.category.value,
-			done: false,
-			createdAt: new Date().getTime()
-		}
+  // Event listener for form submission when adding a new todo
+  newTodoForm.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-		todos.push(todo);
+    // Create a new todo object
+    const todo = {
+      content: e.target.elements.content.value,
+      category: e.target.elements.category.value,
+      done: false,
+      createdAt: new Date().getTime(),
+    };
 
-		localStorage.setItem('todos', JSON.stringify(todos));
+    // Input validation
+    if (!nameInput.value) {
+      alert("Username must be filled out");
+    } else if (!todo.content) {
+      alert("Please enter a todo before adding!");
+    } else if (!todo.category) {
+      alert("Please select a category for your todo!");
+    } else {
+      // Add the new todo to the todos array
+      todos.push(todo);
 
-		// Reset the form
-		e.target.reset();
+      // Store the updated todos array in localStorage
+      localStorage.setItem("todos", JSON.stringify(todos));
 
-		DisplayTodos()
-	})
+      // Reset the form
+      e.target.reset();
 
-	DisplayTodos()
-})
+      // Display the updated list of todos
+      DisplayTodos();
+    }
+  });
 
-function DisplayTodos () {
-	const todoList = document.querySelector('#todo-list');
-	todoList.innerHTML = "";
-	todos.forEach(todo => {
-		const todoItem = document.createElement('div');
-		todoItem.classList.add('todo-item');
+  // Initial display of todos when the page loads
+  DisplayTodos();
+});
 
-		const label = document.createElement('label');
-		const input = document.createElement('input');
-		const span = document.createElement('span');
-		const content = document.createElement('div');
-		const actions = document.createElement('div');
-		const edit = document.createElement('button');
-		const deleteButton = document.createElement('button');
 
-		input.type = 'checkbox';
-		input.checked = todo.done;
-		span.classList.add('bubble');
-		if (todo.category == 'personal') {
-			span.classList.add('personal');
-		} else {
-			span.classList.add('business');
-		}
-		content.classList.add('todo-content');
-		actions.classList.add('actions');
-		edit.classList.add('edit');
-		deleteButton.classList.add('delete');
+//+++++++++++++++++++++++++++++++++++= Function to display todos in the UI
+function DisplayTodos() {
+  // Get a reference to the todo list container
+  const todoList = document.querySelector("#todo-list");
+  // Clear the existing content of the todo list
+  todoList.innerHTML = "";
 
-		content.innerHTML = `<input type="text" value="${todo.content}" readonly>`;
-		edit.innerHTML = 'Edit';
-		deleteButton.innerHTML = 'Delete';
+  // Iterate through each todo in the todos array
+  todos.forEach((todo) => {
+    // Create elements for displaying the todo
+    const todoItem = document.createElement("div");
+    todoItem.classList.add("todo-item");
 
-		label.appendChild(input);
-		label.appendChild(span);
-		actions.appendChild(edit);
-		actions.appendChild(deleteButton);
-		todoItem.appendChild(label);
-		todoItem.appendChild(content);
-		todoItem.appendChild(actions);
 
-		todoList.appendChild(todoItem);
+      // Create elements for displaying todo details (label, input, span, content, actions, edit, deleteButton)
+    const label = document.createElement("label");
+    const input = document.createElement("input");
+    const span = document.createElement("span");
+    const content = document.createElement("div");
+    const actions = document.createElement("div");
+    const edit = document.createElement("button");
+    const deleteButton = document.createElement("button");
 
-		if (todo.done) {
-			todoItem.classList.add('done');
-		}
-		
-		input.addEventListener('change', (e) => {
-			todo.done = e.target.checked;
-			localStorage.setItem('todos', JSON.stringify(todos));
+    input.type = "checkbox";
+    input.checked = todo.done;
+    span.classList.add("bubble");
+    if (todo.category == "personal") {
+      span.classList.add("personal");
+    } else {
+      span.classList.add("business");
+    }
+    content.classList.add("todo-content");
+    actions.classList.add("actions");
+    edit.classList.add("edit");
+    deleteButton.classList.add("delete");
 
-			if (todo.done) {
-				todoItem.classList.add('done');
-			} else {
-				todoItem.classList.remove('done');
-			}
+    content.innerHTML = `<input type="text" value="${todo.content}" readonly>`;
+    edit.innerHTML = "Edit";
+    deleteButton.innerHTML = "Delete";
 
-			DisplayTodos()
+    label.appendChild(input);
+    label.appendChild(span);
+    actions.appendChild(edit);
+    actions.appendChild(deleteButton);
+    todoItem.appendChild(label);
+    todoItem.appendChild(content);
+    todoItem.appendChild(actions);
 
-		})
+    todoList.appendChild(todoItem);
 
-		edit.addEventListener('click', (e) => {
-			const input = content.querySelector('input');
-			input.removeAttribute('readonly');
-			input.focus();
-			input.addEventListener('blur', (e) => {
-				input.setAttribute('readonly', true);
-				todo.content = e.target.value;
-				localStorage.setItem('todos', JSON.stringify(todos));
-				DisplayTodos()
+    if (todo.done) {
+      todoItem.classList.add("done");
+    }
 
-			})
-		})
+    input.addEventListener("change", (e) => {
+      todo.done = e.target.checked;
+      localStorage.setItem("todos", JSON.stringify(todos));
 
-		deleteButton.addEventListener('click', (e) => {
-			alert("Are u sure to delete it ...")
-			todos = todos.filter(t => t != todo);
-			localStorage.setItem('todos', JSON.stringify(todos));
-			DisplayTodos()
-		})
+      if (todo.done) {
+        todoItem.classList.add("done");
+      } else {
+        todoItem.classList.remove("done");
+      }
 
-	})
+      DisplayTodos();
+    });
+
+    edit.addEventListener("click", (e) => {
+      const input = content.querySelector("input");
+      input.removeAttribute("readonly");
+      input.focus();
+      input.addEventListener("blur", (e) => {
+        input.setAttribute("readonly", true);
+        todo.content = e.target.value;
+        localStorage.setItem("todos", JSON.stringify(todos));
+        DisplayTodos();
+      });
+    });
+
+    deleteButton.addEventListener("click", (e) => {
+      alert("Are you sure you want to delete this todo?");
+      todos = todos.filter((t) => t != todo);
+      localStorage.setItem("todos", JSON.stringify(todos));
+      DisplayTodos();
+    });
+  });
 }
-let name = document.getElementById('name')
-let input = document.getElementById('content');
-let label = document.getElementById('category1');
-console.log(label.checked)
- document.getElementById('add-todo').addEventListener("click", function someValidation(e){
-	e.preventDefault()
-	if(name.value === ""){
-		alert("please Enter Your Name at the Top")
-	}
-else if(input.value === ""){
-		alert('please put some todo')
-	} else if(label.checked === false){
-		alert("Selsect Any Category")
-	}
- })
